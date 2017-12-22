@@ -104,7 +104,7 @@ class geoip {
 					"longitude": 2.3387,
 					"metro_code": 0
 					*/
-					if(is_object($data) && isset($data->geoplugin_city) && $data->geoplugin_city)
+					if(is_object($data) && isset($data->city) && $data->city)
 					{
 						$success = true;
 						$this->setGps($data->latitude, $data->longitude);
@@ -160,7 +160,7 @@ class geoip {
 					"asn": "AS3215",
 					"org": "Orange"
 					*/
-					if(is_object($data) && isset($data->geoplugin_city) && $data->geoplugin_city)
+					if(is_object($data) && isset($data->city) && $data->city)
 					{
 						$success = true;
 						$this->setGps($data->latitude, $data->longitude);
