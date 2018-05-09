@@ -7,8 +7,8 @@ geoip::SetStoragePath('./storage');
 
 // to use custom just call the AddSource method with a source instance
 // ex :
-// geoip::AddSource(new \ldbglobe\geoip\source\ipstack('YOUR PERSONNAL AUTH KEY XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'));
-// geoip::AddSource(new \ldbglobe\geoip\source\ipinfodb('YOUR PERSONNAL AUTH KEY XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'));
+// geoip::AddSource(new \ldbglobe\geoip\source\ipstack('YOUR_PERSONNAL_AUTH_KEY_XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'));
+// geoip::AddSource(new \ldbglobe\geoip\source\ipinfodb('YOUR_PERSONNAL_AUTH_KEY_XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'));
 
 // default sources will be automaticaly added if no custom source is set
 // so this line is optionnal
