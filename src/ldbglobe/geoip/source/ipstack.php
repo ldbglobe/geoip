@@ -10,7 +10,7 @@ class ipstack {
 
 	public function getLimitation()
 	{
-		return (object)array('max_hit'=>1000,'per_periode'=>'hour');
+		return (object)array('max_hit'=>10000,'per_periode'=>'month');
 	}
 
 	public function source_hash()

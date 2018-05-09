@@ -10,7 +10,7 @@ class ipinfodb {
 
 	public function getLimitation()
 	{
-		return (object)array('max_hit'=>1000,'per_periode'=>'hour');
+		return (object)array('max_hit'=>2,'per_periode'=>'second');
 	}
 
 	public function source_hash()
