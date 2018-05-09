@@ -34,7 +34,7 @@ class ipinfodb {
 		[longitude] => 7.26608
 		[timeZone] => +02:00
 		*/
-		if(is_object($data) && isset($data->city) && $data->city)
+		if(is_object($data) && isset($data->cityName) && $data->cityName)
 		{
 			$geoip->setGps($data->latitude, $data->longitude);
 			$geoip->setCountryCode($data->countryCode);
