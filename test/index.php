@@ -5,6 +5,15 @@ use ldbglobe\geoip\geoip;
 
 geoip::SetStoragePath('./storage');
 
+// to use custom just call the AddSource method with a source instance
+// ex :
+// geoip::AddSource(new \ldbglobe\geoip\source\ipstack('YOUR PERSONNAL AUTH KEY XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'));
+// geoip::AddSource(new \ldbglobe\geoip\source\ipinfodb('YOUR PERSONNAL AUTH KEY XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'));
+
+// default sources will be automaticaly added if no custom source is set
+// so this line is optionnal
+geoip::AddDefaultSources();
+
 $geoip = new geoip( isset($_GET['ip']) && !empty($_GET['ip']) ? $_GET['ip'] : null );
 $location = $geoip->resolve_location();
 
