@@ -142,15 +142,17 @@ class geoip {
 		}
 
 		if($per_periode=='year')
-			$log_file = self::$_storage_path.DIRECTORY_SEPARATOR.'api_throttle'.DIRECTORY_SEPARATOR.$code.DIRECTORY_SEPARATOR.date('Y').'log';
+			$log_file = self::$_storage_path.DIRECTORY_SEPARATOR.'api_throttle'.DIRECTORY_SEPARATOR.$code.DIRECTORY_SEPARATOR.date('Y').'.log';
 		else if($per_periode=='month')
-			$log_file = self::$_storage_path.DIRECTORY_SEPARATOR.'api_throttle'.DIRECTORY_SEPARATOR.$code.DIRECTORY_SEPARATOR.date('Ym').'log';
+			$log_file = self::$_storage_path.DIRECTORY_SEPARATOR.'api_throttle'.DIRECTORY_SEPARATOR.$code.DIRECTORY_SEPARATOR.date('Ym').'.log';
 		else if($per_periode=='day')
-			$log_file = self::$_storage_path.DIRECTORY_SEPARATOR.'api_throttle'.DIRECTORY_SEPARATOR.$code.DIRECTORY_SEPARATOR.date('Ymd').'log';
+			$log_file = self::$_storage_path.DIRECTORY_SEPARATOR.'api_throttle'.DIRECTORY_SEPARATOR.$code.DIRECTORY_SEPARATOR.date('Ymd').'.log';
 		else if($per_periode=='hour')
-			$log_file = self::$_storage_path.DIRECTORY_SEPARATOR.'api_throttle'.DIRECTORY_SEPARATOR.$code.DIRECTORY_SEPARATOR.date('YmdH').'log';
+			$log_file = self::$_storage_path.DIRECTORY_SEPARATOR.'api_throttle'.DIRECTORY_SEPARATOR.$code.DIRECTORY_SEPARATOR.date('YmdH').'.log';
 		else if($per_periode=='minute')
-			$log_file = self::$_storage_path.DIRECTORY_SEPARATOR.'api_throttle'.DIRECTORY_SEPARATOR.$code.DIRECTORY_SEPARATOR.date('YmdHm').'log';
+			$log_file = self::$_storage_path.DIRECTORY_SEPARATOR.'api_throttle'.DIRECTORY_SEPARATOR.$code.DIRECTORY_SEPARATOR.date('YmdHm').'.log';
+		else if($per_periode=='second')
+			$log_file = self::$_storage_path.DIRECTORY_SEPARATOR.'api_throttle'.DIRECTORY_SEPARATOR.$code.DIRECTORY_SEPARATOR.date('YmdHms').'.log';
 
 		// cleanup of all old file
 		$this->api_throttle_purge();
@@ -189,12 +191,16 @@ class geoip {
 					}
 					else
 					{
-						if(filemtime($full) < time()-3600*24*60)
-						{
-							//unlink($full);
-							//echo $full;
-							$allclear = false;
-						}
+						$ttl = null;
+						if(preg_match('/^[0-9]{4}\.log/',$file)) $ttl = 3600*24*366;
+						else if(preg_match('/^[0-9]{6}\.log/',$file)) $ttl = 3600*24*31;
+						else if(preg_match('/^[0-9]{8}\.log/',$file)) $ttl = 3600*24;
+						else if(preg_match('/^[0-9]{10}\.log/',$file)) $ttl = 3600;
+						else if(preg_match('/^[0-9]{12}\.log/',$file)) $ttl = 60;
+						else if(preg_match('/^[0-9]{14}\.log/',$file)) $ttl = 1;
+
+						if($ttl && filemtime($full) < time()-$ttl)
+							unlink($full);
 						else
 							$allclear = false;
 					}
@@ -209,28 +215,3 @@ class geoip {
 		return false;
 	}
 }
-
-/*
-//http://ip-api.com/json
-	// Geoloc Api Session
-	if(!Session::Get('geolocate'))
-	{
-	    try {
-	        $ctx = stream_context_create(array('http'=>
-	                array(
-	                    'timeout' => 5,
-	                )
-	            ));
-	        $info_visitor = unserialize(file_get_contents('http://www.geoplugin.net/php.gp?ip='.$_SERVER['REMOTE_ADDR'], false, $ctx));
-	        $info_visitor['geoplugin_credit'] = null;
-	        $info_visitor = json_encode($info_visitor);
-	        Session::Set('geolocate', $info_visitor);
-	    } catch (Exception $e) {
-	        $info_visitor = json_encode(array('status'=>'error'));
-	    }
-	}
-	else
-	{
-	    $info_visitor = Session::Get('geolocate');
-	}
-*/
